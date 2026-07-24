@@ -1,0 +1,14 @@
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest   # <--- Línea corregida
+    container_name: tfm_sql_server
+    ports:
+      - "1433:1433"
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "TuPasswordSeguro123!"
+    volumes:
+      - sql_server_data:/var/opt/mssql
+
+volumes:
+  sql_server_data:

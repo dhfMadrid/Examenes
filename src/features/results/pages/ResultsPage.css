@@ -1,0 +1,513 @@
+/* ResultsPage.css — Mismos estilos que LoginPage para coherencia de diseño */
+
+/* ── Variables compartidas (importadas LoginPage.css) ── */
+
+/* ═══════════════ PAGE BACKGROUND ═══════════════ */
+.results-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--login-bg-dark) 0%, #1a365d 40%, #2563eb 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 12s ease infinite;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.results-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(96,165,250,.15) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(99,102,241,.12) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(139,92,246,.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* ═══════════════ MAIN CARD ═══════════════ */
+.results-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 480px;
+  margin: 24px;
+  background: var(--login-surface);
+  border-radius: var(--login-radius);
+  box-shadow: var(--login-shadow-elevated);
+  overflow: hidden;
+  animation: cardEntry .45s cubic-bezier(.16,1,.3,1) both;
+}
+
+/* ═══════════════ CARD HEADER (hero area) ═══════════════ */
+.results-card-header {
+  background: linear-gradient(135deg, #1e40af 0%, var(--login-primary) 60%, #7c3aed 100%);
+  padding: 32px 32px 28px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.results-card-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255,255,255,.12) 0%, transparent 60%),
+    radial-gradient(circle at 80% 90%, rgba(255,255,255,.06) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.results-card-header h1 {
+  margin: 0 0 8px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+  position: relative;
+}
+
+.results-user-info {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(255,255,255,.78);
+  position: relative;
+}
+
+.exam-id-text {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: rgba(255,255,255,.62);
+  position: relative;
+}
+
+/* ═══════════════ CARD BODY ═══════════════ */
+.results-card-body {
+  padding: 28px 32px 32px;
+}
+
+/* ═══════════════ SCORE CARD ═══════════════ */
+.score-card {
+  position: relative;
+  margin-top: 0;
+  padding: 28px 32px;
+  border-radius: var(--login-radius-sm);
+  overflow: hidden;
+}
+
+/* Indicador lateral de estado */
+.score-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+}
+
+.score-card.aprobado {
+  background: #e8f5e9;
+}
+.score-card.aprobado::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  background: var(--login-success);
+}
+
+.score-card.suspendido {
+  background: #ffebee;
+}
+.score-card.suspendido::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  background: var(--login-error);
+}
+
+.score-card h2 {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--login-text-primary);
+}
+
+/* ═══════════════ SCORE STATS ROW ═══════════════ */
+.score-stats {
+  display: flex;
+  gap: 24px;
+  margin-top: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--login-border);
+}
+
+.stat-item {
+  text-align: center;
+  flex: 1;
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.stat-value.acierto { color: #27ae60; }
+.stat-value.fallo   { color: #e74c3c; }
+.stat-value.noc     { color: var(--login-text-muted); }
+
+.stat-label {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--login-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 4px;
+}
+
+/* ═══════════════ NOTA BOX ═══════════════ */
+.nota-box {
+  margin-top: 20px;
+  padding: 16px;
+  background: #ffffff;
+  border: 1.5px solid var(--login-border);
+  border-radius: var(--login-radius-sm);
+  text-align: center;
+}
+
+.nota-label {
+  font-size: 14px;
+  color: var(--login-text-secondary);
+  font-weight: 500;
+}
+
+.nota-valor {
+  display: block;
+  font-size: 38px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  margin-top: 4px;
+}
+
+.nota-valor.aprobado { color: #27ae60; }
+.nota-valor.suspendido { color: #e74c3c; }
+
+/* ═══════════════ PORCENTAJE CIRCLE ===================== */
+.porcentaje-box {
+  margin-top: 16px;
+  padding: 20px;
+  background: #ffffff;
+  border: 1.5px solid var(--login-border);
+  border-radius: var(--login-radius-sm);
+  text-align: center;
+}
+
+.porcentaje-valor {
+  display: block;
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--login-text-primary);
+  letter-spacing: -1px;
+}
+
+.resultado-badge {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 6px 24px;
+  font-size: 20px;
+  font-weight: 700;
+  border-radius: 24px;
+  letter-spacing: 0.04em;
+}
+
+.resultado-badge.aprobado {
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--login-primary) 0%, #7c3aed 100%);
+  box-shadow: 0 2px 8px rgba(37,99,235,.3);
+}
+
+.resultado-badge.suspendido {
+  color: #ffffff;
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  box-shadow: 0 2px 8px rgba(239,68,68,.3);
+}
+
+/* ═══════════════ INFO TEXT ═══════════════ */
+.info-text {
+  margin-top: 16px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--login-text-secondary);
+}
+
+.mensaje-resultado {
+  margin-top: 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--login-text-muted);
+  font-style: italic;
+}
+
+/* ═══════════════ BUTTONS ═══════════════ */
+.btn-submit {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 15.5px;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--login-primary) 0%, #7c3aed 100%);
+  border: none;
+  border-radius: var(--login-radius-sm);
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .2s ease, opacity .2s ease;
+  letter-spacing: 0.01em;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-submit::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,.18) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+
+.btn-submit:hover:not(:disabled)::before {
+  opacity: 1;
+}
+
+.btn-submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37,99,235,.35);
+}
+
+.btn-submit:active:not(:disabled) {
+  transform: translateY(0);
+  background: linear-gradient(135deg, var(--login-primary-active) 0%, #6d28d9 100%);
+}
+
+.btn-submit:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ═══════════════ REVISION SECTION ═══════════════ */
+.revision-section {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--login-border);
+}
+
+.btn-revision {
+  width: 100%;
+  padding: 12px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--login-bg-dark) 0%, var(--login-primary) 100%);
+  border: none;
+  border-radius: var(--login-radius-sm);
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .2s ease, opacity .2s ease;
+  position: relative;
+}
+
+.btn-revision::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,.15) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+
+.btn-revision:hover:not(:disabled)::before {
+  opacity: 1;
+}
+
+.btn-revision:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(15,23,42,.3);
+}
+
+.btn-revision:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--login-text-muted);
+  transform: none;
+}
+
+.revision-expired-box {
+  margin-top: 12px;
+  padding: 14px 16px;
+  border-radius: var(--login-radius-sm);
+  background: #fffbeb;
+  border: 1px solid rgba(245,158,11,.18);
+  color: #92400e;
+  font-size: 13px;
+}
+
+/* ═══════════════ REVISION PANEL (expanded) ============== */
+.revision-panel-inner {
+  margin-top: 16px;
+  padding: 20px 24px;
+  border-radius: var(--login-radius-sm);
+  background: #fffff0;
+  border: 1.5px solid rgba(252,211,77,.3);
+}
+
+.revision-panel-inner h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  color: var(--login-text-primary);
+}
+
+.revision-timer {
+  font-size: 14px;
+  color: var(--login-text-secondary);
+  margin-bottom: 12px;
+}
+
+.revision-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.revision-table thead th {
+  padding: 10px 12px;
+  background: var(--login-bg-dark);
+  color: #ffffff;
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  border-bottom: 2px solid rgba(7,9,.2);
+}
+
+.revision-table tbody td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--login-border);
+  color: var(--login-text-primary);
+}
+
+.revision-table tbody tr:nth-child(even) td {
+  background: rgba(248,250,252,.6);
+}
+
+/* ═══════════════ ACTIONS ROW ═══════════════ */
+.actions-row {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--login-border);
+  display: flex;
+  gap: 12px;
+}
+
+.btn-action {
+  flex: 1;
+  padding: 12px 16px;
+  font-size: 14.5px;
+  font-weight: 600;
+  border-radius: var(--login-radius-sm);
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .2s ease, background var(--login-transition);
+  text-align: center;
+}
+
+.btn-action:hover {
+  transform: translateY(-1px);
+}
+
+.btn-action.volver {
+  color: var(--login-text-primary);
+  background: #f8fafc;
+  border: 1.5px solid var(--login-border);
+}
+
+.btn-action.volver:hover {
+  background: #f1f5f9;
+  box-shadow: 0 2px 6px rgba(0,0,0,.06);
+}
+
+.btn-action.logout {
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--login-error) 0%, #dc2626 100%);
+  border: none;
+}
+
+.btn-action.logout:hover {
+  box-shadow: 0 4px 10px rgba(239,68,68,.3);
+}
+
+/* ═══════════════ LOADING ═══════════════ */
+.loading-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 16px;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3.5px solid #e2e8f0;
+  border-top-color: var(--login-primary);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.loading-text {
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
+  opacity: 0.85;
+}
+
+/* ═══════════════ RESPONSIVE ═══════════════ */
+@media (max-width: 480px) {
+  .results-card { margin: 12px; border-radius: var(--login-radius-sm); }
+  .results-card-header { padding: 24px 20px 22px; }
+  .results-card-body { padding: 22px 20px 26px; }
+  .score-stats { gap: 12px; }
+  .stat-value { font-size: 26px; }
+  .porcentaje-valor { font-size: 34px; }
+  .actions-row { flex-direction: column; }
+}
+
+/* ═══════════════ PRINT ═══════════════ */
+@media print {
+  button, .revision-section, .spinner, .loading-text { display: none !important; }
+  .results-page {
+    background: white !important;
+    animation: none !important;
+  }
+  .results-card {
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+  }
+  .revision-table td, .revision-table th {
+    background: white !important;
+    color: black !important;
+    border-color: #333 !important;
+    padding: 4px 8px !important;
+    font-size: 12px !important;
+  }
+}

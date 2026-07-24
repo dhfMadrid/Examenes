@@ -1,0 +1,527 @@
+/* LoginPage.css — Estilos profesionales para la página de login + MFA */
+
+/* ── Variables compartidas ── */
+:root {
+  --login-primary: #2563eb;
+  --login-primary-hover: #1d4ed8;
+  --login-primary-active: #1e40af;
+  --login-surface: #ffffff;
+  --login-bg-dark: #0f172a;
+  --login-bg-mid: #1e293b;
+  --login-border: #e2e8f0;
+  --login-border-focus: #60a5fa;
+  --login-text-primary: #1e293b;
+  --login-text-secondary: #64748b;
+  --login-text-muted: #94a3b8;
+  --login-error: #ef4444;
+  --login-success: #22c55e;
+  --login-radius: 12px;
+  --login-radius-sm: 8px;
+  --login-shadow-card:
+    0 4px 6px -1px rgba(0,0,0,.1),
+    0 2px 4px -2px rgba(0,0,0,.1);
+  --login-shadow-elevated:
+    0 20px 25px -5px rgba(0,0,0,.15),
+    0 8px 10px -6px rgba(0,0,0,.1);
+  --login-transition: 0.2s cubic-bezier(.4,0,.2,1);
+}
+
+/* ═══════════════ PAGE BACKGROUND ═══════════════ */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--login-bg-dark) 0%, #1a365d 40%, #2563eb 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 12s ease infinite;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Patrón decorativo de fondo (hex mesh sutil) */
+.login-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(96,165,250,.15) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(99,102,241,.12) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(139,92,246,.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+/* ═══════════════ CARD PRINCIPAL ═══════════════ */
+.login-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 420px;
+  margin: 24px;
+  background: var(--login-surface);
+  border-radius: var(--login-radius);
+  box-shadow: var(--login-shadow-elevated);
+  overflow: hidden;
+  animation: cardEntry .45s cubic-bezier(.16,1,.3,1) both;
+}
+
+@keyframes cardEntry {
+  from { opacity: 0; transform: translateY(18px) scale(.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ═══════════════ CARD HEADER (hero area) ═══════════════ */
+.login-card-header {
+  background: linear-gradient(135deg, #1e40af 0%, var(--login-primary) 60%, #7c3aed 100%);
+  padding: 32px 32px 28px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-card-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255,255,255,.12) 0%, transparent 60%),
+    radial-gradient(circle at 80% 90%, rgba(255,255,255,.06) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.login-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 32px;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.login-card-header h2 {
+  margin: 0 0 4px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+  position: relative;
+}
+
+.login-card-header p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(255,255,255,.78);
+  position: relative;
+}
+
+/* ═══════════════ CARD BODY ═══════════════ */
+.login-card-body {
+  padding: 28px 32px 32px;
+}
+
+/* ═══════════════ FORM GROUPS (inputs) ═══════════════ */
+.form-group {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--login-text-primary);
+  margin-bottom: 6px;
+  letter-spacing: 0.005em;
+}
+
+.form-input-wrap {
+  position: relative;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"] {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 15px;
+  color: var(--login-text-primary);
+  background: #f8fafc;
+  border: 1.5px solid var(--login-border);
+  border-radius: var(--login-radius-sm);
+  outline: none;
+  transition: border-color var(--login-transition), box-shadow var(--login-transition), background var(--login-transition);
+  font-family: inherit;
+}
+
+.form-group input[type="text"]::placeholder,
+.form-group input[type="password"]::placeholder {
+  color: var(--login-text-muted);
+  font-size: 14px;
+}
+
+.form-group input:focus {
+  border-color: var(--login-border-focus);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(96,165,250,.25);
+}
+
+/* Toggle password visibility button */
+.password-toggle-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+  font-size: 17px;
+  line-height: 1;
+  transition: background var(--login-transition);
+  color: var(--login-text-muted);
+}
+
+.password-toggle-btn:hover {
+  background: #e2e8f0;
+  color: var(--login-text-primary);
+}
+
+/* ═══════════════ PASSWORD STRENGTH BAR ═══════════════ */
+.strength-bar-wrap {
+  margin-top: 6px;
+  height: 4px;
+  background: #e2e8f0;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.strength-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width .3s ease, background-color .3s ease;
+}
+
+/* ═══════════════ CHECKLIST DE FORTALEZA (dentro del card) ═══════════════ */
+.strength-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 4px;
+  display: flex;
+  gap: 6px 12px;
+  flex-wrap: wrap;
+}
+
+.strength-checklist li {
+  font-size: 11.5px;
+  color: var(--login-text-muted);
+  transition: color .2s ease, opacity .2s ease;
+}
+
+/* ═══════════════ SUBMIT BUTTON ═══════════════ */
+.btn-submit {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 15.5px;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--login-primary) 0%, #7c3aed 100%);
+  border: none;
+  border-radius: var(--login-radius-sm);
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .2s ease, opacity .2s ease;
+  letter-spacing: 0.01em;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-submit::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,.18) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+
+.btn-submit:hover:not(:disabled)::before {
+  opacity: 1;
+}
+
+.btn-submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37,99,235,.35);
+}
+
+.btn-submit:active:not(:disabled) {
+  transform: translateY(0);
+  background: linear-gradient(135deg, var(--login-primary-active) 0%, #6d28d9 100%);
+}
+
+.btn-submit:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ═══════════════ INFO BOX (footer dentro del card) ═══════════════ */
+.info-box {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-radius: var(--login-radius-sm);
+  background: #f0f7ff;
+  border: 1px solid rgba(37,99,235,.12);
+}
+
+.info-box p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--login-text-secondary);
+}
+
+/* ═══════════════ ERRORS ═══════════════ */
+.login-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  border-radius: var(--login-radius-sm);
+  background: #fef2f2;
+  border: 1px solid rgba(239,68,68,.18);
+  color: #b91c1c;
+  font-size: 14px;
+  animation: shakeIn .3s ease both;
+}
+
+@keyframes shakeIn {
+  0%, 100% { transform: translateX(0); }
+  25%      { transform: translateX(-4px); }
+  75%      { transform: translateX(4px); }
+}
+
+/* ═══════════════ LOADING STATE ═══════════════ */
+.loading-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 48px 32px;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3.5px solid #e2e8f0;
+  border-top-color: var(--login-primary);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.loading-text {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--login-text-secondary);
+}
+
+/* ═══════════════ MFA SPECIFIC ═══════════════ */
+.mfa-icon-large {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.otp-input {
+  font-family: 'Courier New', Courier, monospace !important;
+  font-size: 28px !important;
+  letter-spacing: 10px !important;
+  text-align: center !important;
+  padding: 14px !important;
+}
+
+.demo-otp {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 22px;
+  color: var(--login-primary);
+  background: #eff6ff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  user-select: all;
+  letter-spacing: 3px;
+}
+
+.mfa-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 20px;
+  padding: 8px 14px;
+  border: none;
+  background: none;
+  color: var(--login-primary);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background .15s ease;
+}
+
+.mfa-back-link:hover {
+  background: #eff6ff;
+}
+
+/* ═══════════════ RESPONSIVE ═══════════════ */
+/* ═══════════════ MFA FLOW — demo card / footer / helper ── */
+.demo-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding: 10px 16px;
+    background: #eff6ff;
+    border: 1px solid rgba(37,99,235,.15);
+    border-radius: var(--login-radius-sm);
+}
+
+.demo-card .demo-label {
+    font-size: 13px;
+    color: var(--login-text-secondary);
+    font-weight: 500;
+}
+
+/* Demo OTP style (inside .demo-card) */
+.demo-otp {
+    font-family: 'Courier New', Courier, monospace !important;
+    font-size: 22px !important;
+    color: var(--login-primary);
+    background: none;
+    padding: 0 8px;
+    font-weight: 700;
+    user-select: all;
+    letter-spacing: 3px;
+}
+
+/* Wrapper para el input OTP con fondo sutil */
+.otp-input-field-wrap {
+    background: #f8fafc;
+    border: 1.5px solid var(--login-border);
+    border-radius: var(--login-radius-sm);
+    padding: 2px;
+    transition: border-color var(--login-transition), box-shadow var(--login-transition);
+}
+
+.otp-input-field-wrap:focus-within {
+    border-color: var(--login-border-focus);
+    box-shadow: 0 0 0 3px rgba(96,165,250,.25);
+}
+
+.otp-input-field-wrap input.otp-input {
+    background: transparent;
+    border: none;
+    padding-left: 4px;
+    width: 100%;
+}
+
+/* Botón "introducir código" dentro .flow-next-btn-wrap */
+.flow-next-btn-wrap .btn-submit {
+    margin: 0;
+}
+
+/* Fila de botones del flujo MFA (demo → input) */
+.flow-btn-row {
+    display: flex;
+    gap: 10px;
+    align-items: stretch;
+}
+
+.flow-btn-row .btn { min-width: 90px; }
+.flow-btn-row .full-width { flex: 1; }
+
+/* Footer del card MFA */
+.login-card-footer {
+    padding: 18px 32px 24px;
+    text-align: center;
+    border-top: 1px solid var(--login-border);
+}
+
+.help-text {
+    font-size: 12.5px;
+    color: var(--login-text-muted);
+}
+
+.help-text a.link-secondary {
+    color: var(--login-primary);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.help-text a.link-secondary:hover {
+    text-decoration: underline;
+}
+
+/* ═══════════════ Botón Volver — estilo full-matching btn-submit pero compacto para fila doble ═══════════════ */
+.btn-back {
+    padding: 12px 18px;
+    font-size: 15.5px;
+    font-weight: 600;
+    color: #ffffff;
+    background: linear-gradient(135deg, var(--login-primary) 0%, var(--login-bg-dark) 60%, var(--login-primary) 100%);
+    border: none;
+    border-radius: var(--login-radius-sm);
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .2s ease, opacity .2s ease;
+    letter-spacing: 0.01em;
+    position: relative;
+    overflow: hidden;
+    min-width: 100px;
+    text-align: center;
+}
+
+.btn-back::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,.2) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity .2s ease;
+}
+
+.btn-back:hover::before {
+    opacity: 1;
+}
+
+.btn-back:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37,99,235,.35);
+}
+
+.btn-back:active:not(:disabled) {
+    transform: translateY(0);
+    background: linear-gradient(135deg, var(--login-primary-active) 0%, #1a1a2e 60%, var(--login-primary-active) 100%);
+}
+
+.btn-back:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* ═══════════════ RESPONSIVE ═══════════════ */
+@media (max-width: 480px) {
+  .login-card { margin: 12px; border-radius: var(--login-radius-sm); }
+  .login-card-header { padding: 24px 20px 22px; }
+  .login-card-body { padding: 22px 20px 26px; }
+  .login-logo { font-size: 28px; }
+  .login-card-header h2 { font-size: 19px; }
+}
