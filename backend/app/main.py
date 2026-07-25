@@ -9,6 +9,8 @@ import hashlib
 import json as _jsonlib
 
 import logging
+logging.basicConfig(level=logging.INFO)
+
 
 import re as _re
 
