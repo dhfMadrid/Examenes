@@ -1193,15 +1193,19 @@ def _obtener_examen_int_id_por_session(session_id: str) -> int | None:
 
     """
 
+    print(f"[TRACE][get_ex_id] >>> _obtener_examen_int_id_por_session(session_id={session_id!r}, type={type(session_id).__name__})")
+
     log("[ex_id] Buscando examen por session_id=%s", session_id)
 
     conn = _get_db()
+    print(f"[TRACE][get_ex_id] -> conn tipo={type(conn).__name__} DB_NAME configurado? DB_SERVER={DB_SERVER} DB_NAME={DB_NAME}")
 
     try:
 
         curs = conn.cursor()
 
 
+        print(f"[TRACE][get_ex_id] -> checking mapa_in_memory: len={len(_session_id_to_dbid)} keys_preview={list(_session_id_to_dbid.keys())[:8]}")
 
         # Metodo 1: mapeo in-memory (_session_id_to_dbid se llena en _seed_session_ids)
 
@@ -1357,6 +1361,8 @@ def _calcular_y_guardar_resultado(
 
     """
 
+    print("[TRACE][_calc] >>> ENTER _calcular_y_guardar_resultado(examen_int_id=" + str(examen_int_id) + " n_respuestas=" + str(len(respuestas)) + " mod=" + str(exam_info.get("cod_modulo","?")) + " apto=" + str(exam_info.get("porc_apto_test","?")) + "%")
+
     conn = _get_db()
 
     try:
@@ -1405,6 +1411,7 @@ def _calcular_y_guardar_resultado(
 
 
 
+        print("[TRACE][_calc] -> fetchall exam_preguntas examen_id=" + str(examen_int_id) + ": " + str(len(seleccionado)) + " filas")
         correcta_list = []
 
         fallo_list = []
@@ -1757,6 +1764,15 @@ async def finalizar_examen(payload: FinalizarRequest):
 
     """Finalizar un examen y guardar los datos en la tabla resultados_examen (BD)."""
 
+    print("[FINALIZAR] ⬇️ POST recibido - DEBUG START ================================== [FINALIZAR_EXAMEN]")
+    print(f"[FINALIZAR] request_type={type(payload).__name__} class_type={FinalizarRequest}")
+    print(f"[FINALIZAR] payload.examId = {payload.examId!r} (type={type(payload.examId).__name__})")
+    print(f"[FINALIZAR] payload.sessionID = {payload.sessionID!r} (type={type(payload.sessionID).__name__})")
+    print(f"[FINALIZAR] payload.nifPasaporte = {payload.nifPasaporte!r} (type={type(payload.nifPasaporte).__name__})")
+    print(f"[FINALIZAR] len(respuestas) = {len(payload.respuestas)} (first 2 respuestas={payload.respuestas[:2] if payload.respuestas else 'EMPTY'})")
+    print(f"[FINALIZAR] payload.tiempoRestante = {payload.tiempoRestante!r} (type={type(payload.tiempoRestante).__name__})")
+    print(f"[FINALIZAR] DB_SERVER={DB_SERVER} DB_PORT={DB_PORT} DB_USER={DB_USER} DB_NAME={DB_NAME}")
+    
     log("[finalizar] ← POST recibido: examId=%s sessionID=%s nif=%s respuestas=%d tiempoRestante=%d",
 
         payload.examId, payload.sessionID, payload.nifPasaporte, len(payload.respuestas), payload.tiempoRestante)
@@ -1783,9 +1799,11 @@ async def finalizar_examen(payload: FinalizarRequest):
 
 
 
+        print(f"[FINALIZAR] 🔄 PASO 2 → Llamando _obtener_examen_int_id_por_session(examId={payload.examId!r}, type={type(payload.examId).__name__})")
         # Paso 2: Buscar el examen por examId en BD (directamente por id bigint)
 
         examen_int_id = _obtener_examen_int_id_por_session(payload.examId)
+        print(f"[FINALIZAR] 🔄 PASO 2 RESULT → _obtener_examen_int_id_por_session devolvió: {examen_int_id!r} (type={type(examen_int_id).__name__})")
 
         if not examen_int_id:
 
@@ -1833,7 +1851,9 @@ async def finalizar_examen(payload: FinalizarRequest):
 
         # Paso 5: Calcular y guardar el resultado en la BD
 
+        print(f"[FINALIZAR] 🔍 PASO 4 OK → passo a PASO 5 (scoring + guardar)")
         log("[finalizar] → Calculando scoring...")
+        print(f"[FINALIZAR] 🔄 PASO 5 → Llamando _calcular_y_guardar_resultado(examen_int_id={examen_int_id})")
 
         resultados = _calcular_y_guardar_resultado(
 
@@ -2555,6 +2575,7 @@ async def obtener_resultado(examen_id: str):
 
     examen_int = _obtener_examen_int_id_por_session(examen_id)
 
+    print("[TRACE][GET_resultados] -> buscar donde examen_int=" + str(examen_int))
     if not examen_int:
 
         try:
@@ -2567,6 +2588,7 @@ async def obtener_resultado(examen_id: str):
 
     resultado = _obtener_resultado_por_examen(examen_int)
 
+    print("[TRACE][GET_resultados] -> resultado existe=" + str(resultado is not None))
     if not resultado:
 
         raise HTTPException(
