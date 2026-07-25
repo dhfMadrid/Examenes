@@ -199,7 +199,7 @@ export default function LoginPage(_props: LoginPageProps) {
                                 type="text"
                                 value={nifInput}
                                 onChange={e => { setNifInput(e.target.value); setError(null); }}
-                                placeholder="DNI / NIF de alumno (ej. 12345678Z)"
+                                placeholder="DNI / NIF de alumno"
                                 autoComplete="username"
                             />
                         </div>
@@ -213,7 +213,7 @@ export default function LoginPage(_props: LoginPageProps) {
                                     type={showPassword ? "text" : "password"}
                                     value={passwordInput}
                                     onChange={e => { setPasswordInput(e.target.value); setError(null); }}
-                                    placeholder="Contraseña (ej. Demo1234)"
+                                    placeholder="Contraseña"
                                     autoComplete="current-password"
                                 />
                                 <button

@@ -68,7 +68,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onAuthSuccess, loading }) 
                 type="text"
                 value={nifInput}
                 onChange={e => { setNifInput(e.target.value); setError(null); }}
-                placeholder="DNI / NIF de alumno (ej. 12345678Z)"
+                placeholder="DNI / NIF de alumno"
                 data-testid="nif-input"
             />
             <small style={{ color: identValido ? "#32CD32" : "#999" }}>
@@ -82,7 +82,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onAuthSuccess, loading }) 
                     type={showPassword ? "text" : "password"}
                     value={passwordInput}
                     onChange={e => { setPasswordInput(e.target.value); setError(null); }}
-                    placeholder="Contraseña (ej. Demo1234)"
+                    placeholder="Contraseña"
                     data-testid="password-input"
                 />
                 <button
