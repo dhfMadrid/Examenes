@@ -24,9 +24,11 @@ interface ResultData {
 }
 
 /** Fetch resultados finales desde el backend */
+const API_BASE = import.meta.env.VITE_API_BASE_URL ?? (import.meta.env.DEV ? 'http://127.0.0.1:8001/api/v1' : '/api/v1');
+
 async function fetchResultado(examenId: string): Promise<ResultData | null> {
     try {
-        const resp = await fetch(`/api/v1/resultados/${examenId}`);
+        const resp = await fetch(`${API_BASE}/resultados/${examenId}`);
         if (!resp.ok) return null;
         const data = await resp.json();
         // Mapear camelCase para el backend al formato que usa ResultsPage
