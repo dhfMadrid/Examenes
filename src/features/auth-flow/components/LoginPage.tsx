@@ -48,8 +48,8 @@ export default function LoginPage(_props: LoginPageProps) {
 
     type FlowStep = 'login' | 'mfa-challenge' | 'loading';
     const [flowStep, setFlowStep] = useState<FlowStep>('login');
-    const [nifInput, setNifInput] = useState("12345678Z");
-    const [passwordInput, setPasswordInput] = useState("Demo1234");
+    const [nifInput, setNifInput] = useState("");
+    const [passwordInput, setPasswordInput] = useState("");
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
