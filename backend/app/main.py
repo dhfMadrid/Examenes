@@ -456,7 +456,10 @@ app.add_middleware(
 
     CORSMiddleware,
 
-    allow_origins=["*"],
+    allow_origins=[
+        "https://tfm-frontend-z8zg.onrender.com",  # <--  frontend en Render
+        "http://localhost:3000",  # desarrollo local (opcional)
+    ],
 
     allow_credentials=True,
 
