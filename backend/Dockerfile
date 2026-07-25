@@ -1,5 +1,5 @@
 # Usar imagen oficial de Python 3.11
-FROM python:3.11
+FROM python:3.11-bullseye
 
 # Instalar dependencias del sistema para ODBC Driver 18 para SQL Server
 RUN apt-get update && apt-get install -y \
