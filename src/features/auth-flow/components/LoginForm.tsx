@@ -28,8 +28,8 @@ function PasswordStrengthBar({ password }: { password: string }) {
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onAuthSuccess, loading }) => {
-    const [nifInput, setNifInput] = useState("12345678Z");
-    const [passwordInput, setPasswordInput] = useState("Demo1234");
+    const [nifInput, setNifInput] = useState("");
+    const [passwordInput, setPasswordInput] = useState("");
     const [error, setError] = useState<string | null>(null);
     const [showPassword, setShowPassword] = useState(false);
 
